@@ -7,10 +7,10 @@ SCREEN_WIDTH = 1000
 SCREEN_HEIGHT = 600
 # 初始化
 pygame.init()
-# 建立 window 視窗畫布，大小為 800x600
+# 建立 window 視窗畫布，大小為 SCREEN_WIDTH x SCREEN_HEIGHT
 window_surface = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 # 設置視窗標題
-pygame.display.set_caption('Boxing Game')
+pygame.display.set_caption('BoxinGame')
 
 RUN = True
 
