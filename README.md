@@ -1,6 +1,6 @@
 # NYCU Object-Oriented Programming 112
-# Weclome to Group 9 page ! 🙌
-# 這是一款 BOMBER MAN 爆爆王遊戲
+# Welcome to Group 9 page ! 🙌
+# 這是一款 Bomber Man 爆爆王遊戲
 
 
 ![image](https://github.com/Xian37/group9_project/blob/main/Game_Picture/start.png)
