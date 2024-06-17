@@ -13,12 +13,12 @@ class InvincibleItem(GameObject):
     def apply(self, target):
         if isinstance(target, Player):
             target.invincible = True  # Set player invincible attribute to True
-            # Set a timer to reset player invincibility after 5 seconds
-            pygame.time.set_timer(USEREVENT + 3, 5000)
+            # Set a timer to reset player invincibility after 3.5 seconds
+            pygame.time.set_timer(USEREVENT + 3, 3500)
         elif isinstance(target, Enemy):
             target.invincible = True  # Set enemy invincible attribute to True
-            # Set a timer to reset enemy invincibility after 5 seconds
-            pygame.time.set_timer(USEREVENT + 4, 5000)
+            # Set a timer to reset enemy invincibility after 3.5 seconds
+            pygame.time.set_timer(USEREVENT + 4, 3500)
 
     def draw(self, screen):
         screen.blit(self.image_invincible, (self.x, self.y))
