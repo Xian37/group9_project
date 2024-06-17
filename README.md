@@ -52,8 +52,6 @@
 		(1) 炸完全部敵人則玩家Player獲勝，自己死亡則敵人Enemy獲勝
 		(2) 倒數時間到時，血量最多者獲勝
 
-			
-
 # 	5.遊戲流程：
 
 		(1) 開始畫面  ->  選角色 
@@ -65,10 +63,9 @@
 
      		main.py
        		test_game.py 
-		constants.py 
+	 	constants.py 
   
-       		Class:
-	 
+       		Main classed we've used : 
 	   		(1) GameObject
 		   		1. Player
 		     			a. Fox
