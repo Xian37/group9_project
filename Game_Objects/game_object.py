@@ -27,7 +27,7 @@ class GameObject:
             fill_rect = pygame.Rect(bar_x, bar_y, fill, bar_height)
             pygame.draw.rect(screen, RED, fill_rect)
             pygame.draw.rect(screen, BLACK, outline_rect, 1)
-
+            
     def draw_name(self, screen):
         font = pygame.font.Font(None, 24)
         text = font.render(self.name, True, BLACK)
