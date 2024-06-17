@@ -60,12 +60,13 @@
 		-> 輸出統計資料 (Terminal and .txt)
  
 #  	6.程式架構：
-
-     		main.py
-       		testgame.py 
-	 	constants.py 
+		
+     		- main.py
+       		- testgame.py
+	 	- constants.py 
   
-       		Main classes we've used : 
+       		- Some classes we've used : 
+	 
 	   		(1) GameObject
 		   		1. Player
 		     			a. Fox
