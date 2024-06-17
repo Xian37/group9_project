@@ -20,7 +20,6 @@ from Game_Objects.game import Game
 # Initialize Pygame
 pygame.init()
 pygame.time.set_timer(ADD_ITEM_EVENT, 5000)
-
 def main():
     game_results = []
     def save_game_result(game):
@@ -30,17 +29,20 @@ def main():
             }
             game_results.append(result)
             with open('game_results.txt', 'a') as f:
-                f.write(f"Time: {game.game_time:.2f} seconds, Winner: {game.winner}\n")
+                f.write(f"ROUND {round} RESULT --->    Time: {game.game_time:.2f} seconds, Bombs you have used: {bomb_times}, Winner: {game.winner}\n")
 
     def print_game_results():
         for result in game_results:
-            print(f"Time: {result['time']:.2f} seconds, Winner: {result['winner']}")
+            print(f"ROUND {round} RESULT --->    Time: {result['time']:.2f} seconds, Bombs you have used: {bomb_times}, Winner: {result['winner']}")
 
     font = pygame.font.Font(None, 100)
     font2 = pygame.font.Font(None, 50)
     Role_chosen = False
     Map_chosen = False
     start = False
+    bomb_times = 0
+    global round
+    round += 1
     try:
         while not start:
             screen.fill(LIGHTBLUE)
@@ -149,6 +151,7 @@ def main():
                     sys.exit()
                 if event.type == KEYDOWN:
                     if event.key == K_SPACE and not game.game_over and game.player.can_place_bomb():
+                        bomb_times += 1
                         bomb_x = (game.player.x - MARGIN_WIDTH) // TILE_SIZE * \
                             TILE_SIZE + MARGIN_WIDTH
                         bomb_y = (game.player.y - 10) // TILE_SIZE * TILE_SIZE + 10
