@@ -68,6 +68,17 @@ class Game:
         # self.image = pygame.image.load(player_path)
         # self.image = pygame.transform.scale(self.image, (self.size, self.size))
 
+    def is_position_occupied(self, x, y):
+        for item in self.health_items + self.speed_items + self.invincible_items + self.landmines:
+            if abs(item.x - x) < TILE_SIZE and abs(item.y - y) <= TILE_SIZE:
+                return True
+        for enemy in self.enemies:
+            if abs(enemy.x - x) < TILE_SIZE and abs(enemy.y - y) <= TILE_SIZE:
+                return True
+        if abs(self.player.x - x) < TILE_SIZE and abs(self.player.y - y) <= TILE_SIZE:
+            return True
+        return False
+    
     def generate_enemies(self, count):
         enemies = []
         for i in range(count):
@@ -85,28 +96,40 @@ class Game:
             for y, row in enumerate(self.map_data):
                 for x, tile in enumerate(row):
                     if tile == 0 and random.random() < 0.035:
-                        health_item = HealthItem(x * TILE_SIZE + MARGIN_WIDTH, y * TILE_SIZE + 10, TILE_SIZE, YELLOW)
-                        self.health_items.append(health_item)
+                        item_x = x * TILE_SIZE + MARGIN_WIDTH
+                        item_y = y * TILE_SIZE + 10
+                        if not self.is_position_occupied(item_x, item_y):
+                            health_item = HealthItem(x * TILE_SIZE + MARGIN_WIDTH, y * TILE_SIZE + 10, TILE_SIZE, YELLOW)
+                            self.health_items.append(health_item)
                         
     def generate_speed_items(self):
         for y, row in enumerate(self.map_data):
             for x, tile in enumerate(row):
                 if tile == 0 and random.random() < 0.05:
-                    speed_item = SpeedItem(x * TILE_SIZE + MARGIN_WIDTH, y * TILE_SIZE + 10, TILE_SIZE, YELLOW)
-                    self.speed_items.append(speed_item)
+                    item_x = x * TILE_SIZE + MARGIN_WIDTH
+                    item_y = y * TILE_SIZE + 10
+                    if not self.is_position_occupied(item_x, item_y):
+                        speed_item = SpeedItem(x * TILE_SIZE + MARGIN_WIDTH, y * TILE_SIZE + 10, TILE_SIZE, YELLOW)
+                        self.speed_items.append(speed_item)
                     
     def generate_invincible_items(self):
         for y, row in enumerate(self.map_data):
             for x, tile in enumerate(row):
                 if tile == 0 and random.random() < 0.025:
-                    invincible_item = InvincibleItem(x * TILE_SIZE + MARGIN_WIDTH, y * TILE_SIZE + 10, TILE_SIZE, YELLOW)
-                    self.invincible_items.append(invincible_item)
+                    item_x = x * TILE_SIZE + MARGIN_WIDTH
+                    item_y = y * TILE_SIZE + 10
+                    if not self.is_position_occupied(item_x, item_y):
+                        invincible_item = InvincibleItem(x * TILE_SIZE + MARGIN_WIDTH, y * TILE_SIZE + 10, TILE_SIZE, YELLOW)
+                        self.invincible_items.append(invincible_item)
     def generate_landmines(self):
             for y, row in enumerate(self.map_data):
                 for x, tile in enumerate(row):
                     if tile == 0 and random.random() < 0.04:
-                        landmine = LandmineItem(x * TILE_SIZE + MARGIN_WIDTH, y * TILE_SIZE + 10, TILE_SIZE, YELLOW, time.time())
-                        self.landmines.append(landmine)
+                        item_x = x * TILE_SIZE + MARGIN_WIDTH
+                        item_y = y * TILE_SIZE + 10
+                        if not self.is_position_occupied(item_x, item_y):
+                            landmine = LandmineItem(x * TILE_SIZE + MARGIN_WIDTH, y * TILE_SIZE + 10, TILE_SIZE, YELLOW, time.time())
+                            self.landmines.append(landmine)
 
     def generate_random_item(self):
         item_type = random.choice(['health', 'speed', 'invincible', 'landmine'])
