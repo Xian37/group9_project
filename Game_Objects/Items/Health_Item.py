@@ -2,6 +2,7 @@ import pygame
 from Game_Objects.game_object import GameObject
 from Game_Objects.enemy import Enemy
 from Game_Objects.player import Player
+from Game_Objects.Player.Monkey import Monkey
 from constants import *
 
 class HealthItem(GameObject):
@@ -12,7 +13,10 @@ class HealthItem(GameObject):
 
     def apply(self, target):
         if isinstance(target, Player):
-            target.health = min(target.health + 50, 100)
+            if isinstance(target, Monkey):
+                target.health = min(target.health + 50, 125)
+            else:
+                target.health = min(target.health + 50, 100)
         elif isinstance(target, Enemy):
             target.health = min(target.health + 50, 100)
 
