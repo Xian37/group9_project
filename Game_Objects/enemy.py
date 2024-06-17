@@ -53,7 +53,7 @@ class Enemy(GameObject):
             self.direction = random.choice(['left', 'right', 'up', 'down'])
 
     def can_move(self, x, y, map_data):
-        if x < MARGIN_WIDTH or y < 0 or x + self.size > SCREEN_WIDTH or y + self.size > SCREEN_HEIGHT:
+        if x < MARGIN_WIDTH or y < 10 or x + self.size > SCREEN_WIDTH or y + self.size > SCREEN_HEIGHT:
             return False
         try:
             if (map_data[int((y - 10) // TILE_SIZE)][int((x - MARGIN_WIDTH) // TILE_SIZE)] != 0 or
@@ -77,7 +77,7 @@ class Enemy(GameObject):
                 bomb_y = (self.y - 10) // TILE_SIZE * TILE_SIZE + 10
                 if not any(bomb.x == bomb_x and bomb.y == bomb_y for bomb in bombs):
                     bombs.append(Bomb(bomb_x, bomb_y, TILE_SIZE,
-                                 RED, time.time(), bomb_path))
+                                 RED, time.time(), 30, bomb_path))
                     self.bomb_cooldown = 200  # Cooldown period before placing another bomb
         else:
             self.bomb_cooldown -= 1
