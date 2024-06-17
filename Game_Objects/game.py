@@ -9,28 +9,38 @@ from Game_Objects.player import Player
 from Game_Objects.enemy import Enemy
 from Game_Objects.bomb import Bomb
 from Game_Objects.flame import Flame
-from Game_Objects.healthitem import HealthItem
-from Game_Objects.Invincibleitem import InvincibleItem
-from Game_Objects.Speeditem import SpeedItem
-from Game_Objects.landmine import LandmineItem
+from Game_Objects.Items.Health_Item import HealthItem
+from Game_Objects.Items.Invincible_Item import InvincibleItem
+from Game_Objects.Items.Speed_Item import SpeedItem
+from Game_Objects.Items.Landmine_Item import LandmineItem
+from Game_Objects.Player.Cucu import Cucu
+from Game_Objects.Player.Monkey import Monkey
+from Game_Objects.Player.Fox import Fox
 class Game:
-    def __init__(self,num):
-        filename = "Map/Map" + num + ".txt"
-        with open(filename, 'r') as f:
+    def __init__(self,map_num,role_num):
+        self.map_num = map_num
+        map_filename = "Map/Map" + map_num + ".txt"
+        with open(map_filename, 'r') as f:
             self.map_data = [list(map(int, line.strip().split())) for line in f]
-        if num == "1":
-            self.player = Player(MARGIN_WIDTH + TILE_SIZE, 10 +
-                                TILE_SIZE, ENTITY_SIZE-10, BLACK, 5, player_path)
+        if role_num == "1":
+            self.player = Fox(MARGIN_WIDTH + TILE_SIZE, 10 +TILE_SIZE, ENTITY_SIZE-10, BLACK, 5, role1_fox)
+            self.enemy_path = fox_enemy
+        elif role_num == "2":
+            self.player = Monkey(MARGIN_WIDTH + TILE_SIZE ,10 + TILE_SIZE, ENTITY_SIZE - 10, BLACK, 5, role2_monkey)
+            self.enemy_path = monkey_enemy
+        elif role_num == "3":
+            self.player = Cucu(MARGIN_WIDTH + TILE_SIZE ,10 + TILE_SIZE, ENTITY_SIZE - 10, BLACK, 5, role3_cucu)
+            self.enemy_path = cucu_enemy
+
+        if map_num == "1":
             wall_path = forest_wall_path
             ob_path = forest_ob_path
             road_path = forest_road_path
-        elif num == "2":
-            self.player = Player(MARGIN_WIDTH ,10, ENTITY_SIZE - 10, BLACK, 5, player_path)
-            wall_path = ocean_wall_path
+        elif map_num == "2":
+            wall_path = ocean_wall_path_1
             ob_path = ocean_ob_path
-            road_path = ocean_road_path
-        elif num == "3":
-            self.player = Player(MARGIN_WIDTH ,10, ENTITY_SIZE - 10, BLACK, 5, player_path)
+            road_path = ocean_road_path_2
+        elif map_num == "3":
             wall_path = desert_wall_path
             ob_path = desert_ob_path
             road_path = desert_road_path
@@ -41,9 +51,10 @@ class Game:
         self.landmines = []
         self.bombs = []
         self.flames = []
-        self.game_over = False
-        self.game_won = False
         self.start_time = time.time()
+        self.game_time = 0
+        self.winner = None
+        self.game_over = False
         self.image_wall = pygame.image.load(wall_path).convert_alpha()
         self.image_wall = pygame.transform.scale(self.image_wall, (TILE_SIZE, TILE_SIZE))
         self.image_obstacle = pygame.image.load(ob_path).convert_alpha()
@@ -66,44 +77,57 @@ class Game:
                 if self.map_data[int(y)][int(x)] == 0:
                     direction = random.choice(['left', 'right', 'up', 'down'])
                     enemies.append(Enemy(int(x) * TILE_SIZE + MARGIN_WIDTH, int(y) * TILE_SIZE +
-                                   10, ENTITY_SIZE-10, GREEN, 5, direction, enemy_path,  f'Enemy {i+1}'))
+                                   10, ENTITY_SIZE-10, GREEN, 5, direction, self.enemy_path,  f'Enemy {i+1}'))
                     break
         return enemies
     
     def generate_health_items(self):
             for y, row in enumerate(self.map_data):
                 for x, tile in enumerate(row):
-                    if tile == 0 and random.random() < 0.02:
+                    if tile == 0 and random.random() < 0.035:
                         health_item = HealthItem(x * TILE_SIZE + MARGIN_WIDTH, y * TILE_SIZE + 10, TILE_SIZE, YELLOW)
                         self.health_items.append(health_item)
                         
     def generate_speed_items(self):
         for y, row in enumerate(self.map_data):
             for x, tile in enumerate(row):
-                if tile == 0 and random.random() < 0.04:
+                if tile == 0 and random.random() < 0.05:
                     speed_item = SpeedItem(x * TILE_SIZE + MARGIN_WIDTH, y * TILE_SIZE + 10, TILE_SIZE, YELLOW)
                     self.speed_items.append(speed_item)
                     
     def generate_invincible_items(self):
         for y, row in enumerate(self.map_data):
             for x, tile in enumerate(row):
-                if tile == 0 and random.random() < 0.01:
+                if tile == 0 and random.random() < 0.025:
                     invincible_item = InvincibleItem(x * TILE_SIZE + MARGIN_WIDTH, y * TILE_SIZE + 10, TILE_SIZE, YELLOW)
                     self.invincible_items.append(invincible_item)
     def generate_landmines(self):
             for y, row in enumerate(self.map_data):
                 for x, tile in enumerate(row):
-                    if tile == 0 and random.random() < 0.1:
+                    if tile == 0 and random.random() < 0.04:
                         landmine = LandmineItem(x * TILE_SIZE + MARGIN_WIDTH, y * TILE_SIZE + 10, TILE_SIZE, YELLOW, time.time())
                         self.landmines.append(landmine)
+
+    def generate_random_item(self):
+        item_type = random.choice(['health', 'speed', 'invincible', 'landmine'])
+        while True:
+            x = random.randint(0, len(self.map_data[0]) - 1)
+            y = random.randint(0, len(self.map_data) - 1)
+            if self.map_data[y][x] == 0: 
+                if item_type == 'health':
+                    self.health_items.append(HealthItem(x * TILE_SIZE + MARGIN_WIDTH, y * TILE_SIZE + 10, TILE_SIZE, YELLOW))
+                elif item_type == 'speed':
+                    self.speed_items.append(SpeedItem(x * TILE_SIZE + MARGIN_WIDTH, y * TILE_SIZE + 10, TILE_SIZE, YELLOW))
+                elif item_type == 'invincible':
+                    self.invincible_items.append(InvincibleItem(x * TILE_SIZE + MARGIN_WIDTH, y * TILE_SIZE + 10, TILE_SIZE, YELLOW))
+                elif item_type == 'landmine':
+                    self.landmines.append(LandmineItem(x * TILE_SIZE + MARGIN_WIDTH, y * TILE_SIZE + 10, TILE_SIZE, YELLOW, time.time()))
+                break
+
     def draw_map(self):
         for y, row in enumerate(self.map_data):
             for x, tile in enumerate(row):
                 if tile == 1:
-                    # pygame.draw.rect(screen, GRAY, (x * TILE_SIZE + MARGIN_WIDTH, y * TILE_SIZE + 10, TILE_SIZE, TILE_SIZE))
-                   # map_rect = map_image.get_rect(center = (x * TILE_SIZE + MARGIN_WIDTH, y * TILE_SIZE + 10))
-                    # map_image = pygame.transform.scale(self.image, (self.size, self.size))
-                    # screen.blit(pygame.image.load(map_image), map_rect)
                     screen.blit(self.image_road, (x * TILE_SIZE + MARGIN_WIDTH, y * TILE_SIZE + 10))
                     screen.blit(self.image_wall, (x * TILE_SIZE +
                                 MARGIN_WIDTH, y * TILE_SIZE + 10))
@@ -140,7 +164,7 @@ class Game:
                 if (enemy.x > health_item.x - 30 and enemy.x < health_item.x + 30 and enemy.y > health_item.y - 30 and enemy.y < health_item.y + 30):
                     health_item.apply(enemy)
                     self.health_items.remove(health_item)
-                    #break  # Stop checking for other enemies if one has used the health item
+                    break  # Stop checking for other enemies if one has used the health item
 
         for speed_item in self.speed_items[:]:
             if (self.player.x > speed_item.x - 30 and self.player.x < speed_item.x + 30 and self.player.y > speed_item.y - 30 and self.player.y < speed_item.y + 30):
@@ -153,7 +177,7 @@ class Game:
                 if (enemy.x > speed_item.x - 30 and enemy.x < speed_item.x + 30 and enemy.y > speed_item.y - 30 and enemy.y < speed_item.y + 30):
                     speed_item.apply(enemy)
                     self.speed_items.remove(speed_item)
-                    #break
+                    break
         
         for invincible_item in self.invincible_items[:]:
             if (self.player.x > invincible_item.x - 30 and self.player.x < invincible_item.x + 30 and self.player.y > invincible_item.y - 30 and self.player.y < invincible_item.y + 30):
@@ -166,7 +190,7 @@ class Game:
                 if (enemy.x > invincible_item.x - 30 and enemy.x < invincible_item.x + 30 and enemy.y > invincible_item.y - 30 and enemy.y < invincible_item.y + 30):
                     invincible_item.apply(enemy)
                     self.invincible_items.remove(invincible_item)
-                    #break
+                    break
         for landmine in self.landmines[:]:
             if (self.player.x > landmine.x - 30 and self.player.x < landmine.x + 30 and self.player.y > landmine.y - 30 and self.player.y < landmine.y + 30):
                 if landmine.explosion_timer == 0:
@@ -192,8 +216,8 @@ class Game:
         if self.player.health <= 0:
             self.game_over = True
 
-        if not self.enemies:
-            self.game_won = True
+        if self.enemies == []:
+            self.game_over = True
 
         # Check if time is up
         elapsed_time = current_time - self.start_time
@@ -201,11 +225,15 @@ class Game:
             self.game_over = True
             self.determine_winner()
 
+
     def draw(self):
         screen.fill(WHITE)
+        outline_rect = pygame.Rect(100-3, 10-3 , 970, 790)
+        pygame.draw.rect(screen, BLACK, outline_rect, 3)
         self.draw_map()
         self.player.draw(screen)
         self.player.draw_bomb_inventory(screen)
+        self.player.draw_health_block(screen)
         for enemy in self.enemies:
             enemy.draw(screen)
         for bomb in self.bombs:
@@ -222,39 +250,54 @@ class Game:
             landmine.draw(screen)
         if self.game_over:
             self.display_game_over()
-        elif self.game_won:
-            self.display_game_won()
 
         # Draw the timer
-        if not self.game_over and not self.game_won:
+        if not self.game_over:
             self.draw_timer()
 
     def draw_timer(self):
-        font = pygame.font.Font(None, 45)
+        font = pygame.font.Font(None, 55)
         elapsed_time = time.time() - self.start_time
         remaining_time = max(GAME_DURATION - elapsed_time, 0)
         timer_text = font.render(f"Time: {int(remaining_time)}", True, BLACK)
-        screen.blit(timer_text, (SCREEN_WIDTH - 150, 10))
+        screen.blit(timer_text, (SCREEN_WIDTH - 175, 10))
 
     def display_game_over(self):
-        font = pygame.font.Font(None, 74)
+        screen.fill(LIGHTBLUE)
+        font_large = pygame.font.Font(None, 74)  # Large font for game over message
+        font_small = pygame.font.Font(None, 54)  # Smaller font for instructions
+
         if self.enemies:
             if self.player.health > 0:
-                winner = 'You' if self.player.health > max(
-                    enemy.health for enemy in self.enemies) else 'Enemy'
+                if self.player.health > max(enemy.health for enemy in self.enemies):
+                    winner = 'You'
+                    screen.blit(gamewin_image, ( 0,150 ) )
+                else:
+                    winner = 'Enemy'
+                    screen.blit(gameover_image, ( 0,150 ) )
             else:
                 winner = 'Enemy'
+                screen.blit(gameover_image, ( 0,150 ) )
         else:
             winner = 'You'
-        text = font.render(f"Game Over: {winner} Wins!", True, BLACK)
-        screen.blit(text, (SCREEN_WIDTH//2 - text.get_width() //
-                    2, SCREEN_HEIGHT//2 - text.get_height()//2))
+            screen.blit(gamewin_image, ( 0,150 ) )
 
-    def display_game_won(self):
-        font = pygame.font.Font(None, 74)
-        text = font.render("You Win!", True, BLACK)
-        screen.blit(text, (SCREEN_WIDTH//2 - text.get_width() //
-                    2, SCREEN_HEIGHT//2 - text.get_height()//2))
+        # Render the game over message
+        text_game_over = font_large.render(f"{winner} Wins! ", True, WHITE)
+        text_game_over_rect = text_game_over.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2))
+
+        # Render the instruction text
+        text_instructions1 = font_small.render("Press 'R' to Restart ", True, WHITE)
+        text_instructions1_rect = text_instructions1.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + 75))
+        text_instructions2 = font_small.render("Press 'Q' to Quit ", True, WHITE)
+        text_instructions2_rect = text_instructions2.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + 125))
+
+        # Blit the texts onto the screen
+        screen.blit(text_game_over, text_game_over_rect)
+        screen.blit(text_instructions1, text_instructions1_rect)
+        screen.blit(text_game_over, text_game_over_rect)
+        screen.blit(text_instructions2, text_instructions2_rect)
+
 
     def determine_winner(self):
         if self.player.health > 0:
@@ -262,10 +305,16 @@ class Game:
                 highest_enemy_health = max(
                     enemy.health for enemy in self.enemies)
                 if self.player.health > highest_enemy_health:
-                    self.game_won = True
+                    self.game_over = False
                 else:
                     self.game_over = True
             else:
-                self.game_won = True
+                self.game_over = False
         else:
             self.game_over = True
+            
+    def end_game(self):
+            self.game_over = True
+            self.end_time = time.time()
+            self.game_time = min(self.end_time - self.start_time , 100)
+            self.winner = "You" if not self.game_over  else "Enemy"
