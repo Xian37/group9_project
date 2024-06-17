@@ -62,8 +62,8 @@
 #  	6.程式架構：
 		
      		- main.py
+	 	- constants.py
        		- testgame.py
-	 	- constants.py 
   
        		- Some classes we've used : 
 	 
