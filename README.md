@@ -11,11 +11,11 @@
 
 		三個Player角色有三個屬性: 血量、速度與炸彈傷害
   		且每一個會有一項屬性特別突出，而敵人Enemy則為均衡型角色。
-    		*角色的選擇會綁定敵人的造型
-    
-		(1) Player 竹狐  vs Enemy 熊貓
-		(2) Player 山道猴子 vs Enemy 金色長髮男 
-		(3) Player 菇菇 vs Enemy 奇怪生物
+    		角色的選擇會綁定敵人的是哪個
+    		Player vs Enemy
+		(1) Fox 竹狐  VS 熊貓
+		(2) Moneky 山道猴子 VS 金色長髮男 
+		(3) GuGu 菇菇 VS 奇怪生物
 	
 #	2. 三個地圖：
 
