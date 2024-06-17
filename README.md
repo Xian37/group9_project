@@ -71,16 +71,16 @@
 	 
 	   		(1) GameObject
 		   		1. Player
-		     			a. Fox
+					a. Fox 
 					b. Monkey
-		   			c. Cucu
-		      		2. Enemy
-		 		3. Bomb
-	    			4. Flame
-	       			5. HealthItem
-		  		6. InvincibleItem
-	     			7. LandmineItem
-				8. SpeedItem
+		   			c. Cucu (GuGu)
+		      		2. Enemy 敵人
+		 		3. Bomb 炸彈
+	    			4. Flame 爆炸烈焰
+	       			5. HealthItem 血包
+		  		6. InvincibleItem 無敵
+	     			7. LandmineItem 地雷
+				8. SpeedItem 加速
 	   
 			(2) Game # 主控整個遊戲的道具、敵人、刷新、圖形繪製
 
@@ -91,6 +91,11 @@
 # 玩家失敗畫面
 ![image](https://github.com/Xian37/group9_project/blob/main/Game_Picture/gameover.png)
 # ...
+
+
+
+
+
 	現在時間 6/17 5:00 am
 	我的肝快壞了 by Xian37
 	全都是組員們頭腦、時間及配合GPT輔助做出來的心血
