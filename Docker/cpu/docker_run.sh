@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
 ARGS=("$@")
-USER_NAME="arg"
-PROJ_NAME="oop-python-nycu"
+USER_NAME="Xian37"
+PROJ_NAME="group9_project"
 
 # Make sure processes in the container can connect to the x server
 # Necessary so gazebo can create a context for OpenGL rendering (even headless)
