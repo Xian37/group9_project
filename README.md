@@ -62,10 +62,10 @@
 #  	6.程式架構：
 
      		main.py
-       		test_game.py 
+       		test<u>game.py 
 	 	constants.py 
   
-       		Main classed we've used : 
+       		Main classes we've used : 
 	   		(1) GameObject
 		   		1. Player
 		     			a. Fox
