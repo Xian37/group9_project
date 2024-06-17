@@ -103,3 +103,4 @@ block_y = 265
 bar_width = 80
 bar_height = 525
 outline_rect = pygame.Rect(block_x, block_y, bar_width, bar_height)
+round = 0
