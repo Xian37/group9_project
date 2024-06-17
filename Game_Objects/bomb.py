@@ -5,9 +5,10 @@ from Game_Objects.flame import Flame
 from constants import *
 
 class Bomb(GameObject):
-    def __init__(self, x, y, size, color, placed_time, bomb_path):
+    def __init__(self, x, y, size, color, placed_time, bomb_damage, bomb_path):
         super().__init__(x, y, size, color, health=0)
         self.placed_time = placed_time
+        self.bomb_damage = bomb_damage
         self.image = pygame.image.load(bomb_path)
         self.image = pygame.transform.scale(self.image, (self.size, self.size))
 
@@ -36,14 +37,14 @@ class Bomb(GameObject):
 
         if ((player.x - MARGIN_WIDTH) // TILE_SIZE, (player.y - 10) // TILE_SIZE) in affected_positions:
             if not player.invincible:
-                player.health -= HEALTH_DECREMENT
+                player.health -= self.bomb_damage 
                 if player.health <= 0:
                     player.health = 0
 
         for enemy in enemies[:]:
             if ((enemy.x - MARGIN_WIDTH) // TILE_SIZE, (enemy.y - 10) // TILE_SIZE) in affected_positions:
                 if not enemy.invincible:
-                    enemy.health -= HEALTH_DECREMENT
+                    enemy.health -= self.bomb_damage 
                     if enemy.health <= 0:
                         enemies.remove(enemy)
 
