@@ -59,30 +59,30 @@
 		(1) 開始畫面  ->  選角色 
   		->  選地圖 -> 開始遊戲 
 		-> 結束 -> 選擇離開或重新開始 
-	-	-> 輸出統計資料 (Terminal and .txt)
+		-> 輸出統計資料 (Terminal and .txt)
  
 #  	6.程式架構：
 
      		main.py
-       		test_game.py # for pytest 
+       		test_game.py 
 		constants.py 
   
        		Class:
 	 
-   		(1) GameObject
-	   		1. Player
-	     			a. Fox
-				b. Monkey
-	   			c. Cucu
-	      		2. Enemy
-	 		3. Bomb
-    			4. Flame
-       			5. HealthItem
-	  		6. InvincibleItem
-     			7. LandmineItem
-			8. SpeedItem
-   
-		(2) Game # 主控整個遊戲的道具、敵人、刷新、圖形繪製
+	   		(1) GameObject
+		   		1. Player
+		     			a. Fox
+					b. Monkey
+		   			c. Cucu
+		      		2. Enemy
+		 		3. Bomb
+	    			4. Flame
+	       			5. HealthItem
+		  		6. InvincibleItem
+	     			7. LandmineItem
+				8. SpeedItem
+	   
+			(2) Game # 主控整個遊戲的道具、敵人、刷新、圖形繪製
 
 
 # 玩家勝利畫面
