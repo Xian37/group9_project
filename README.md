@@ -62,7 +62,7 @@
 #  	6.程式架構：
 
      		main.py
-       		test<u>game.py 
+       		testgame.py 
 	 	constants.py 
   
        		Main classes we've used : 
