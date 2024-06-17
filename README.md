@@ -11,7 +11,7 @@
 
 		三個Player角色有三個屬性: 血量、速度與炸彈傷害
   		且每一個會有一項屬性特別突出，而敵人Enemy則為均衡型角色。
-    		* 角色的選擇會綁定敵人的造型
+    		*角色的選擇會綁定敵人的造型
     
 		(1) Player 竹狐  vs Enemy 熊貓
 		(2) Player 山道猴子 vs Enemy 金色長髮男 
@@ -56,8 +56,28 @@
 
 # 	5.遊戲流程：
 
-		(1) 開始畫面  ->  選角色  ->  選地圖 -> 開始遊戲 -> 結束 -> 選擇離開或重新開始 -> 輸出統計資料 (Terminal and .txt)
-  
+		(1) 開始畫面  ->  選角色  ->  選地圖 -> 開始遊戲 
+		-> 結束 -> 選擇離開或重新開始 
+	-	-> 輸出統計資料 (Terminal and .txt)
+  	6.程式架構：
+   		constants.py
+     		main.py
+       
+       		Class:
+	 
+   		(1) GameObject
+	   		1. Player
+	     			a. Fox
+				b. Monkey
+	   			c. Cucu
+	      		2. Enemy
+	 		3. Bomb
+    			4. Flame
+       			5. HealthItem
+	  		6. InvincibleItem
+     			7. LandmineItem
+			8. SpeedItem
+		(2) Game
 
 
 # 玩家勝利畫面
