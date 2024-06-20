@@ -6,18 +6,21 @@ from Game_Objects.game_object import GameObject
 from Game_Objects.flame import Flame
 from constants import *
 
+
 class LandmineItem(GameObject):
     def __init__(self, x, y, size, color, placed_time):
-        super().__init__(x, y, size, color, health = 0)
+        super().__init__(x, y, size, color, health=0)
         self.placed_time = placed_time
         self.explosion_timer = 0  # Initialize explosion timer attribute
         self.hidden = False  # Initialize hidden attribute
-        self.image_landmine = pygame.image.load(landmine_path).convert_alpha()  # Replace landmine_image_path with the actual path to your image
-        self.image_landmine = pygame.transform.scale(self.image_landmine, (TILE_SIZE, TILE_SIZE))  # Scale the image to match the tile size
+        # Replace landmine_image_path with the actual path to your image
+        self.image_landmine = pygame.image.load(landmine_path).convert_alpha()
+        self.image_landmine = pygame.transform.scale(
+            self.image_landmine, (TILE_SIZE, TILE_SIZE))  # Scale the image to match the tile size
         self.touch = False
 
     def explode(self, map_data, flames, player, enemies, invincible=False):
-        #self.explosion_timer = 0
+        # self.explosion_timer = 0
         self.hidden = False
         bomb_x, bomb_y = (
             self.x - MARGIN_WIDTH) // TILE_SIZE, (self.y - 10) // TILE_SIZE
@@ -38,12 +41,13 @@ class LandmineItem(GameObject):
                         flames.append(Flame(check_x * TILE_SIZE + MARGIN_WIDTH,
                                             check_y * TILE_SIZE + 10, TILE_SIZE, ORANGE, time.time()))
                         break
-                    elif map_data[int(check_y)][int(check_x)] == 2:  # Check if it's an obstacle
+                    # Check if it's an obstacle
+                    elif map_data[int(check_y)][int(check_x)] == 2:
                         # Obstacles should not be affected by explosions
                         break
                     affected_positions.append((check_x, check_y))
                     flames.append(Flame(check_x * TILE_SIZE + MARGIN_WIDTH,
-                                            check_y * TILE_SIZE + 10, TILE_SIZE, ORANGE, time.time()))
+                                        check_y * TILE_SIZE + 10, TILE_SIZE, ORANGE, time.time()))
                 else:
                     break
 
