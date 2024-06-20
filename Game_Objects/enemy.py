@@ -5,6 +5,7 @@ from Game_Objects.game_object import GameObject
 from Game_Objects.bomb import Bomb
 from constants import *
 
+
 class Enemy(GameObject):
     def __init__(self, x, y, size, color, speed, direction, enemy_path, name):
         super().__init__(x, y, size, color, name=name)
@@ -95,7 +96,7 @@ class Enemy(GameObject):
                 if Dx > 0:
                     if Dy > 0:
                         if Dx > Dy:
-                            self.direction = 'down' 
+                            self.direction = 'down'
                         else:
                             self.direction = 'left'
                     else:
@@ -143,4 +144,3 @@ class Enemy(GameObject):
         screen.blit(self.image, (self.x, self.y))
         self.draw_health_bar(screen)
         self.draw_name(screen)
-    
