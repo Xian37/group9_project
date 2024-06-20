@@ -3,7 +3,7 @@ import sys
 import time
 import random
 from pygame.locals import *
-from constants import*
+from constants import *
 from Game_Objects.game_object import GameObject
 from Game_Objects.player import Player
 from Game_Objects.Player.Cucu import Cucu
@@ -20,20 +20,25 @@ from Game_Objects.game import Game
 # Initialize Pygame
 pygame.init()
 pygame.time.set_timer(ADD_ITEM_EVENT, 5000)
+
+
 def main():
     game_results = []
+
     def save_game_result(game):
-            result = {
-                'time': game.game_time,
-                'winner': game.winner
-            }
-            game_results.append(result)
-            with open('game_results.txt', 'a') as f:
-                f.write(f"ROUND {round} RESULT --->    Time: {game.game_time:.2f} seconds, Bombs you have used: {bomb_times}, Winner: {game.winner}\n")
+        result = {
+            'time': game.game_time,
+            'winner': game.winner
+        }
+        game_results.append(result)
+        with open('game_results.txt', 'a') as f:
+            f.write(
+                f"ROUND {round} RESULT --->    Time: {game.game_time:.2f} seconds, Bombs you have used: {bomb_times}, Winner: {game.winner}\n")
 
     def print_game_results():
-        for result in game_results:
-            print(f"ROUND {round} RESULT --->    Time: {result['time']:.2f} seconds, Bombs you have used: {bomb_times}, Winner: {result['winner']}")
+        with open('game_results.txt', 'r') as f:
+            for line in f:
+                print(line)
 
     font = pygame.font.Font(None, 100)
     font2 = pygame.font.Font(None, 50)
@@ -46,9 +51,10 @@ def main():
     try:
         while not start:
             screen.fill(LIGHTBLUE)
-            screen.blit( start_image, ( 0,150 ) )
+            screen.blit(start_image, (0, 150))
         # screen.blit(font.render('WELCOME TO BOMBERMAN!', True, BLACK), (50, 250))
-            screen.blit(font.render('PRESS ENTER TO START', True, DARKBLUE), (100, 650))
+            screen.blit(font.render('PRESS ENTER TO START',
+                        True, DARKBLUE), (100, 650))
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
@@ -74,9 +80,9 @@ def main():
                         role_num = "3"
                         Role_chosen = True
             screen.fill(LIGHTBLUE)
-            screen.blit(role1_image , (100, 300))
-            screen.blit(role2_image , (400, 300))
-            screen.blit(role3_image , (700, 300))
+            screen.blit(role1_image, (100, 300))
+            screen.blit(role2_image, (400, 300))
+            screen.blit(role3_image, (700, 300))
             screen.blit(font.render(' FOX', True, BLACK), (100, 600))
             screen.blit(font.render('MONKEY', True, BLACK), (400, 600))
             screen.blit(font.render('  GUGU', True, BLACK), (700, 600))
@@ -119,7 +125,7 @@ def main():
             screen.blit(font.render('---- 2 ----', True, BLACK), (400, 200))
             screen.blit(font.render('---- 3 ----', True, BLACK), (700, 200))
             pygame.display.flip()
-        game = Game(map_num,role_num)
+        game = Game(map_num, role_num)
         clock = pygame.time.Clock()
         while True:
             if not game.enemies:
@@ -154,12 +160,15 @@ def main():
                         bomb_times += 1
                         bomb_x = (game.player.x - MARGIN_WIDTH) // TILE_SIZE * \
                             TILE_SIZE + MARGIN_WIDTH
-                        bomb_y = (game.player.y - 10) // TILE_SIZE * TILE_SIZE + 10
+                        bomb_y = (game.player.y - 10) // TILE_SIZE * \
+                            TILE_SIZE + 10
                         if not any(bomb.x == bomb_x and bomb.y == bomb_y for bomb in game.bombs):
                             if role_num == '1':
-                                game.bombs.append(Bomb(bomb_x, bomb_y, TILE_SIZE, RED, time.time(), 40,bomb_path))
+                                game.bombs.append(
+                                    Bomb(bomb_x, bomb_y, TILE_SIZE, RED, time.time(), 40, bomb_path))
                             else:
-                                game.bombs.append(Bomb(bomb_x, bomb_y, TILE_SIZE, RED, time.time(), 30,bomb_path))
+                                game.bombs.append(
+                                    Bomb(bomb_x, bomb_y, TILE_SIZE, RED, time.time(), 30, bomb_path))
                             game.player.bombs -= 1  # Decrease bomb count
                 if event.type == USEREVENT + 1:
                     if role_num == 3:
@@ -197,5 +206,7 @@ def main():
 
     finally:
         print_game_results()
+
+
 if __name__ == "__main__":
     main()
