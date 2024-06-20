@@ -2,6 +2,7 @@ import pygame
 from Game_Objects.game_object import GameObject
 from constants import flame_path, TILE_SIZE
 
+
 class Flame(GameObject):
     def __init__(self, x, y, size, color, created_time):
         super().__init__(x, y, size, color, health=0)
