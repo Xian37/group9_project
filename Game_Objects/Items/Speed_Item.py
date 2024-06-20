@@ -4,11 +4,13 @@ from constants import *
 from Game_Objects.enemy import Enemy
 from Game_Objects.player import Player
 
+
 class SpeedItem(GameObject):
     def __init__(self, x, y, size, color):
         super().__init__(x, y, size, color)
         self.image_speed = pygame.image.load(speed_path)
-        self.image_speed = pygame.transform.scale(self.image_speed, (TILE_SIZE, TILE_SIZE))
+        self.image_speed = pygame.transform.scale(
+            self.image_speed, (TILE_SIZE, TILE_SIZE))
 
     def apply(self, target):
         if isinstance(target, Player):
