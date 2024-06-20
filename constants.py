@@ -8,7 +8,8 @@ HEALTH_DECREMENT = 25
 BOMB_REPLENISH_TIME = 3
 MAX_BOMBS = 2
 GAME_DURATION = 100
-USEREVENT = 0 # to include this variable in order to the use of invincible item and speed item.
+# to include this variable in order to the use of invincible item and speed item.
+USEREVENT = 0
 
 MARGIN_WIDTH = 100
 SCREEN_WIDTH, SCREEN_HEIGHT = 1060+10, 790+10
@@ -17,7 +18,7 @@ ADD_ITEM_EVENT = pygame.USEREVENT + 5
 start_image_path = "Game_Picture/start.png"
 game_over_path = "Game_Picture/gameover.png"
 game_win_path = "Game_Picture/gamewin.png"
-#player_path = "Game_Picture/cucu.png"
+# player_path = "Game_Picture/cucu.png"
 bomb_path = "Game_Picture/bomb.png"
 flame_path = "Game_Picture/flame.png"
 rainbow_path = "Game_Picture/rainbow.jpeg"
@@ -54,9 +55,9 @@ GRAY = (200, 200, 200)
 GREEN = (0, 255, 0)
 ORANGE = (255, 165, 0)
 BLUE = (0, 0, 255)
-YELLOW = (255,255,0)
-LIGHTBLUE = (117,210,210)
-DARKBLUE = (2,2,85)
+YELLOW = (255, 255, 0)
+LIGHTBLUE = (117, 210, 210)
+DARKBLUE = (2, 2, 85)
 
 # Map Path
 map1_img = "Game_Picture/forest2.png"
@@ -90,7 +91,8 @@ map3_image = pygame.transform.scale(pygame.image.load(map3_img), (250, 250))
 role1_image = pygame.image.load(role1_fox)
 role1_image = pygame.transform.scale(pygame.image.load(role1_fox), (250, 250))
 role2_image = pygame.image.load(role2_monkey)
-role2_image = pygame.transform.scale(pygame.image.load(role2_monkey), (250, 250))
+role2_image = pygame.transform.scale(
+    pygame.image.load(role2_monkey), (250, 250))
 role3_image = pygame.image.load(role3_cucu)
 role3_image = pygame.transform.scale(pygame.image.load(role3_cucu), (250, 250))
 
