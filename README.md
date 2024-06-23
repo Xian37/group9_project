@@ -92,7 +92,8 @@
 ![image](https://github.com/Xian37/group9_project/blob/main/Game_Picture/gameover.png)
 # ...
 
-
+更詳細之講解請見:
+https://www.canva.com/design/DAGIkv4tLPw/EY_2W5KeQMS2oQHn4Nd75w/edit?utm_content=DAGIkv4tLPw&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton
 
 
 
